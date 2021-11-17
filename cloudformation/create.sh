@@ -1,5 +1,9 @@
+
 # Turning off the AWS pager so that the CLI doesn't open an editor for each command result
 export AWS_PAGER=""
+
+
+aws --version
 
 aws cloudformation create-stack \
   --stack-name stratospheric-basic-network \
@@ -15,7 +19,7 @@ aws cloudformation create-stack \
   --parameters \
       ParameterKey=NetworkStackName,ParameterValue=stratospheric-basic-network \
       ParameterKey=ServiceName,ParameterValue=todo-app-v1 \
-      ParameterKey=ImageUrl,ParameterValue=docker.io/stratospheric/todo-app-v1:latest \
+      ParameterKey=ImageUrl,ParameterValue=docker.io/spokeman152/aws-test:lastest \
       ParameterKey=ContainerPort,ParameterValue=8080
 
 aws cloudformation wait stack-create-complete --stack-name stratospheric-basic-service
