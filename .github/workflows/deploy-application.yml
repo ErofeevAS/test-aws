@@ -64,3 +64,4 @@ jobs:
           npm run service:deploy -- \
           -c environmentName=staging \
           -c applicationName=test-aws \
+          -c dockerImageTag=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
