@@ -8,7 +8,7 @@ on:
       environmentName:
         description: 'The name of the environment to create.'
         required: true
-#        default: 'staging'
+        default: 'staging'
 jobs:
   deploy-network-stack:
     if: github.ref == 'refs/heads/main'
