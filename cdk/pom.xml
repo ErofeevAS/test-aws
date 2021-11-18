@@ -61,6 +61,18 @@
 			<version>3.18.1</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>software.amazon.awscdk</groupId>
+			<artifactId>lambda-event-sources</artifactId>
+			<version>${cdk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>software.amazon.awscdk</groupId>
+			<artifactId>events-targets</artifactId>
+			<version>${cdk.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>dev.stratospheric</groupId>
 			<artifactId>cdk-constructs</artifactId>

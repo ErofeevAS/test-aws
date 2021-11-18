@@ -9,7 +9,9 @@
     "repository:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-test --require-approval never",
     "repository:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-test --force --require-approval never",
     "service:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" -c springProfile=aws -c dockerImageUrl=234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest -c environmentName=default -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-default --require-approval never",
-    "service:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" -c springProfile=aws -c dockerImageUrl=234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest -c environmentName=default -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-default --force --require-approval never"
+    "service:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" -c springProfile=aws -c dockerImageUrl=234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest -c environmentName=default -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-default --force --require-approval never",
+    "deployment-sequencer:deploy": "cdk deploy \"*\" --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" -c accountId=234440145524 -c applicationName=aws-test -c region=us-west-1 --require-approval never",
+    "deployment-sequencer:destroy": "cdk destroy \"*\" --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" -c accountId=234440145524 -c applicationName=aws-test -c region=us-west-1 --require-approval never"
   },
   "devDependencies": {
     "aws-cdk": "^1.121.0"
