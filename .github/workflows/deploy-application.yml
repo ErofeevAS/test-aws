@@ -20,8 +20,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-        cd application
-        ./mvnw package
+          cd application
+          ./mvnw package
 
       - name: Create docker image tag
         id: dockerImageTag
@@ -36,12 +36,12 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           DOCKER_IMAGE_TAG: ${{ steps.dockerImageTag.outputs.tag }}
         run: |
-        cd application
-        docker build -t aws-test .
-        docker tag aws-test our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
-        docker tag aws-test our.ecr.amazonaws.com/aws-test:latest
-        aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin our.ecr.amazonaws.com
-        docker push our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
-        docker push our.ecr.amazonaws.com/aws-test:latest
+          cd application
+          docker build -t aws-test .
+          docker tag aws-test our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
+          docker tag aws-test our.ecr.amazonaws.com/aws-test:latest
+          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin our.ecr.amazonaws.com
+          docker push our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
+          docker push our.ecr.amazonaws.com/aws-test:latest
 
 
