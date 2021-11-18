@@ -45,13 +45,9 @@ jobs:
         run: |
           cd application
           docker build -t aws-test .
-          docker tag aws-test our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
-          docker tag aws-test our.ecr.amazonaws.com/aws-test:latest
-          echo "${AWS_ACCOUNT_ID}"
-          echo "${AWS_ACCESS_KEY_ID}"
-          echo "${AWS_SECRET_ACCESS_KEY}"
-          echo "${AWS_REGION}"
-          echo "${DOCKER_IMAGE_TAG}"
-          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin our.ecr.amazonaws.com
-          docker push our.ecr.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
-          docker push our.ecr.amazonaws.com/aws-test:latest
+          docker tag aws-test ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
+          docker tag aws-test ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}amazonaws.com/aws-test:latest
+
+          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}amazonaws.com
+          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
+          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}amazonaws.com/aws-test:latest
