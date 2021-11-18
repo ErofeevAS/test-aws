@@ -21,6 +21,9 @@ jobs:
         with:
           java-version: 11.0
 
+      - name: NPM install
+        run: cd cdk && npm install
+
       - name: Build application jar
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -61,7 +64,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
         run: |
           cd cdk
-          npm run service:deploy -- \
-          -c environmentName=staging \
-          -c applicationName=test-aws \
-          -c dockerImageTag=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-test:${DOCKER_IMAGE_TAG}
+          npm run service:deploy \
+          -- -c environmentName=staging \
+          -- -c applicationName=test-aws \
+          -- -c dockerImageUrl=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/aws-test:latest
