@@ -50,7 +50,7 @@ class DeploymentSequencerStack extends Stack {
 						.runtime(Runtime.NODEJS_12_X)
 						.handler("index.handler")
 						.logRetention(RetentionDays.TWO_WEEKS)
-						.reservedConcurrentExecutions(1)
+//						.reservedConcurrentExecutions(1)
 						.events(singletonList(eventSource))
 						.environment(Map.of(
 								"GITHUB_TOKEN", githubToken,

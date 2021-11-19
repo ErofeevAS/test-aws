@@ -1,5 +1,12 @@
 name: build and publish aws application
 
+env:
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+
+
 on:
   push:
     paths:
@@ -25,11 +32,6 @@ jobs:
         run: cd cdk && npm install
 
       - name: Build application jar
-        env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           cd application
           ./mvnw package
@@ -40,10 +42,6 @@ jobs:
 
       - name: Publish docker to ECR registry
         env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
           DOCKER_IMAGE_TAG: ${{ steps.dockerImageTag.outputs.tag }}
         run: |
           cd application
@@ -61,9 +59,9 @@ jobs:
         env:
           DOCKER_IMAGE_TAG: ${{ steps.dockerImageTag.outputs.tag }}
         run: |
-          export EVENT_PAYLOAD="{\"commitSha\": \"$GITHUB_SHA\", \"ref\": \"main\", \"owner\": \"ErofeevAS\", \"repo\": \"aws-test\", \"workflowId\": \"deploy-application.yml\", \"dockerImageTag\": \"$DOCKER_IMAGE_TAG\"}"
+          export EVENT_PAYLOAD="{\"commitSha\": \"$GITHUB_SHA\", \"ref\": \"main\", \"owner\": \"ErofeevAS\", \"repo\": \"test-aws\", \"workflowId\": \"deploy-application.yml\", \"dockerImageTag\": \"$DOCKER_IMAGE_TAG\"}"
           aws sqs send-message \
-            --queue-url=https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/aws-test-deploymentsQueue.fifo \
+            --queue-url=https://sqs.us-west-1.amazonaws.com/234440145524/aws-test-deploymentsQueue.fifo \
             --message-group-id default \
             --message-deduplication-id $GITHUB_SHA \
             --message-body "$EVENT_PAYLOAD"

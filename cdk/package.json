@@ -5,16 +5,19 @@
   "scripts": {
     "info": "IMPORTANT NOTE: Please make sure to replace any harcoded values like region, AWS account ID, etc. ",
     "bootstrap": "cdk bootstrap aws://234440145524/us-west-1 --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.BootstrapApp\"",
-    "network:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" -c environmentName=default -c region=us-west-1 -c accountId=234440145524 --require-approval never",
-    "network:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" -c environmentName=default -c region=us-west-1 -c accountId=234440145524 --force --require-approval never",
-    "repository:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-test --require-approval never",
-    "repository:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-test --force --require-approval never",
-    "service:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" -c springProfile=aws -c dockerImageUrl=234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest -c environmentName=default -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-default --require-approval never",
-    "service:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" -c springProfile=aws -c dockerImageUrl=234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest -c environmentName=default -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-default --force --require-approval never",
-    "deployment-sequencer:deploy": "cdk deploy \"*\" --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" -c accountId=234440145524 -c applicationName=aws-test -c region=us-west-1 --require-approval never",
-    "deployment-sequencer:destroy": "cdk destroy \"*\" --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" -c accountId=234440145524 -c applicationName=aws-test -c region=us-west-1 --require-approval never"
+    "network:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" --require-approval never",
+    "network:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" --force --require-approval never",
+    "repository:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" --require-approval never",
+    "repository:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" --force --require-approval never",
+    "service:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" --require-approval never",
+    "service:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" --force --require-approval never",
+    "deployment-sequencer:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" --require-approval never",
+    "deployment-sequencer:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" --require-approval never"
   },
   "devDependencies": {
-    "aws-cdk": "^1.121.0"
+    "aws-cdk": "^1.124.0"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }
