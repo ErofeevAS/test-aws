@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "info": "IMPORTANT NOTE: Please make sure to replace any harcoded values like region, AWS account ID, etc. ",
+    "bootstrap": "cdk bootstrap aws://234440145524/us-west-1 --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.BootstrapApp\"",
     "network:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" -c environmentName=default -c region=us-west-1 -c accountId=234440145524 --require-approval never",
     "network:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.NetworkApp\" -c environmentName=default -c region=us-west-1 -c accountId=234440145524 --force --require-approval never",
     "repository:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DockerRepositoryApp\" -c region=us-west-1 -c accountId=234440145524 -c applicationName=aws-test --require-approval never",

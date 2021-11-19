@@ -1,5 +1,5 @@
 # This workflow deploys all resources that are specific to the Todo-App, but not the app itself.
-name:  Update the Todo-App environment in staging
+name:  Update the aws-test environment in staging
 
 on:
   push:
@@ -35,6 +35,7 @@ jobs:
           cd cdk
           cd deployment-sequencer-lambda
           npm install
+          npm install -g typescript
           npm run dist
           cd ..
-          npm run deployment-sequencer:deploy -- -c applicationName=aws-test -c githubToken=${{ secrets.GH_API_TOKEN }}  -c accountId=${AWS_ACCOUNT_ID} -- -c region=${AWS_DEFAULT_REGION}
+          npm run deployment-sequencer:deploy -- -c applicationName=aws-test -c githubToken=${{ secrets.GH_API_TOKEN }}
