@@ -1,16 +1,15 @@
 {
   "app": "./mvnw -e -q compile exec:java",
   "context": {
-    "context": {
-      "applicationName": "aws-test",
-      "region": "us-west-1",
-      "accountId": "234440145524",
-      "springProfile": "aws",
-      "environmentName": "staging",
-      "dockerImageUrl": "234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest",
-      "@aws-cdk/core:enableStackNameDuplicates": "true",
-      "aws-cdk:enableDiffNoFail": "true",
-      "@aws-cdk/core:stackRelativeExports": "true"
-    }
+    "applicationName": "test-aws",
+    "region": "us-west-1",
+    "accountId": "234440145524",
+    "springProfile": "aws",
+    "environmentName": "staging",
+    "dockerImageUrl": "234440145524.dkr.ecr.us-west-1.amazonaws.com/aws-test:latest",
+    "dockerRepositoryName": "aws-test",
+    "@aws-cdk/core:enableStackNameDuplicates": "true",
+    "aws-cdk:enableDiffNoFail": "true",
+    "@aws-cdk/core:stackRelativeExports": "true"
   }
 }

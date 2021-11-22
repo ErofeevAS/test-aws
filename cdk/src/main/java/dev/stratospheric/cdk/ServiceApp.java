@@ -28,11 +28,17 @@ public class ServiceApp {
 		String springProfile = (String) app.getNode().tryGetContext("springProfile");
 		requireNonEmpty(springProfile, "context variable 'springProfile' must not be null");
 
-		String dockerImageUrl = (String) app.getNode().tryGetContext("dockerImageUrl");
-		requireNonEmpty(dockerImageUrl, "context variable 'dockerImageUrl' must not be null");
+//		String dockerImageUrl = (String) app.getNode().tryGetContext("dockerImageUrl");
+//		requireNonEmpty(dockerImageUrl, "context variable 'dockerImageUrl' must not be null");
 
 		String region = (String) app.getNode().tryGetContext("region");
 		requireNonEmpty(region, "context variable 'region' must not be null");
+
+		String dockerRepositoryName = (String) app.getNode().tryGetContext("dockerRepositoryName");
+		Validations.requireNonEmpty(dockerRepositoryName, "context variable 'dockerRepositoryName' must not be null");
+
+		String dockerImageTag = (String) app.getNode().tryGetContext("dockerImageTag");
+		Validations.requireNonEmpty(dockerImageTag, "context variable 'dockerImageTag' must not be null");
 
 		Environment awsEnvironment = makeEnv(accountId, region);
 
@@ -46,10 +52,10 @@ public class ServiceApp {
 				.env(awsEnvironment)
 				.build());
 
-		Service.DockerImageSource dockerImageSource = new Service.DockerImageSource(dockerImageUrl);
+		Service.DockerImageSource dockerImageSource = new Service.DockerImageSource(dockerRepositoryName, dockerImageTag);
 		Network.NetworkOutputParameters networkOutputParameters = Network.getOutputParametersFromParameterStore(serviceStack, applicationEnvironment.getEnvironmentName());
 		Service.ServiceInputParameters serviceInputParameters = new Service.ServiceInputParameters(dockerImageSource, environmentVariables(springProfile))
-				.withDesiredInstances(1)
+				.withDesiredInstances(2)
 				.withHealthCheckIntervalSeconds(30);
 
 		Service service = new Service(

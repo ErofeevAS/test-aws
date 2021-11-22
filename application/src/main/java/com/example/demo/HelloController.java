@@ -10,7 +10,7 @@ public class HelloController {
 
 	@GetMapping("hello")
 	public String hello(){
-		return "HELLO FROM AWS";
+		return "TEST AWS LAMBDA PIPELINE 6";
 	}
 
 }

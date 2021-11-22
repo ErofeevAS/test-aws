@@ -45,4 +45,4 @@ jobs:
 
       - name: Deploy Deployment Sequencer
         working-directory: cdk
-        run: npm run deployment-sequencer:deploy -- -c accountId=${AWS_ACCOUNT_ID} -c region=${AWS_DEFAULT_REGION} -c applicationName=${APP_NAME} -c environmentName=${{ github.event.inputs.environmentName }} -c githubToken=${{ secrets.GH_API_TOKEN }}
+        run: npm run deployment-sequencer:deploy --  -c environmentName=${{ github.event.inputs.environmentName }} -c githubToken=${{ secrets.GH_API_TOKEN }}
