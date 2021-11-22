@@ -2,6 +2,8 @@
   "app": "./mvnw -e -q compile exec:java",
   "context": {
     "applicationName": "test-aws",
+    "applicationUrl": "https://app.test-aws.dev",
+    "loginPageDomainPrefix": "test-app-staging",
     "region": "us-west-1",
     "accountId": "234440145524",
     "springProfile": "aws",

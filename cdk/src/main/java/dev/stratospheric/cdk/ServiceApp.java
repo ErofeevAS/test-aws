@@ -1,14 +1,19 @@
 package dev.stratospheric.cdk;
 
 import static dev.stratospheric.cdk.Validations.requireNonEmpty;
+import static java.util.Collections.singletonList;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import software.amazon.awscdk.core.App;
 import software.amazon.awscdk.core.Environment;
 import software.amazon.awscdk.core.Stack;
 import software.amazon.awscdk.core.StackProps;
+import software.amazon.awscdk.services.iam.Effect;
+import software.amazon.awscdk.services.iam.PolicyStatement;
 
 
 public class ServiceApp {
@@ -47,6 +52,19 @@ public class ServiceApp {
 				environmentName
 		);
 
+		// This stack is just a container for the parameters below, because they need a Stack as a scope.
+		// We're making this parameters stack unique with each deployment by adding a timestamp, because updating an existing
+		// parameters stack will fail because the parameters may be used by an old service stack.
+		// This means that each update will generate a new parameters stack that needs to be cleaned up manually!
+		long timestamp = System.currentTimeMillis();
+		Stack parametersStack = new Stack(app, "ServiceParameters-" + timestamp, StackProps.builder()
+				.stackName(applicationEnvironment.prefix("Service-Parameters-" + timestamp))
+				.env(awsEnvironment)
+				.build());
+
+		CognitoStack.CognitoOutputParameters cognitoOutputParameters =
+				CognitoStack.getOutputParametersFromParameterStore(parametersStack, applicationEnvironment);
+
 		Stack serviceStack = new Stack(app, "ServiceStack", StackProps.builder()
 				.stackName(applicationEnvironment.prefix("Service"))
 				.env(awsEnvironment)
@@ -54,9 +72,15 @@ public class ServiceApp {
 
 		Service.DockerImageSource dockerImageSource = new Service.DockerImageSource(dockerRepositoryName, dockerImageTag);
 		Network.NetworkOutputParameters networkOutputParameters = Network.getOutputParametersFromParameterStore(serviceStack, applicationEnvironment.getEnvironmentName());
-		Service.ServiceInputParameters serviceInputParameters = new Service.ServiceInputParameters(dockerImageSource, environmentVariables(springProfile))
+		Service.ServiceInputParameters serviceInputParameters =  new Service.ServiceInputParameters(dockerImageSource, Collections.emptyList(), environmentVariables(springProfile, cognitoOutputParameters))
 				.withDesiredInstances(2)
-				.withHealthCheckIntervalSeconds(30);
+				.withHealthCheckIntervalSeconds(30)
+				.withTaskRolePolicyStatements(List.of(
+						PolicyStatement.Builder.create()
+								.effect(Effect.ALLOW)
+								.resources(singletonList("*"))
+								.actions(singletonList("cognito-idp:*"))
+								.build()));
 
 		Service service = new Service(
 				serviceStack,
@@ -69,11 +93,17 @@ public class ServiceApp {
 		app.synth();
 	}
 
-	static Map<String, String> environmentVariables(String springProfile) {
+	static Map<String, String> environmentVariables(String springProfile, CognitoStack.CognitoOutputParameters cognitoOutputParameters) {
 		Map<String, String> vars = new HashMap<>();
 		vars.put("SPRING_PROFILES_ACTIVE", springProfile);
+		vars.put("COGNITO_CLIENT_ID", cognitoOutputParameters.getUserPoolClientId());
+		vars.put("COGNITO_CLIENT_SECRET", cognitoOutputParameters.getUserPoolClientSecret());
+		vars.put("COGNITO_USER_POOL_ID", cognitoOutputParameters.getUserPoolId());
+		vars.put("COGNITO_LOGOUT_URL", cognitoOutputParameters.getLogoutUrl());
+		vars.put("COGNITO_PROVIDER_URL", cognitoOutputParameters.getProviderUrl());
 		return vars;
 	}
+
 
 	static Environment makeEnv(String account, String region) {
 		return Environment.builder()

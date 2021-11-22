@@ -78,6 +78,11 @@
 			<artifactId>cdk-constructs</artifactId>
 			<version>0.0.27</version>
 		</dependency>
+		<dependency>
+			<groupId>software.amazon.awscdk</groupId>
+			<artifactId>cognito</artifactId>
+			<version>${cdk.version}</version>
+		</dependency>
 
 	</dependencies>
 </project>

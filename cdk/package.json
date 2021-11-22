@@ -12,7 +12,9 @@
     "service:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" --require-approval never",
     "service:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.ServiceApp\" --force --require-approval never",
     "deployment-sequencer:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" --require-approval never",
-    "deployment-sequencer:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" --require-approval never"
+    "deployment-sequencer:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.DeploymentSequencerApp\" --require-approval never",
+    "cognito:deploy": "cdk deploy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.CognitoApp\" --require-approval never",
+    "cognito:destroy": "cdk destroy --app \"./mvnw -e -q compile exec:java -Dexec.mainClass=dev.stratospheric.cdk.CognitoApp\" --force --require-approval never"
   },
   "devDependencies": {
     "aws-cdk": "^1.124.0"

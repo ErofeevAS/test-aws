@@ -1,0 +1,16 @@
+cloud:
+  aws:
+    credentials:
+      secret-key: foo
+      access-key: bar
+    sqs:
+      endpoint: http://localhost:4566
+      region: us-west-1
+
+    instance:
+      data:
+        enbaled: false
+    region:
+      static: us-west-1
+    stack:
+      auto: false
