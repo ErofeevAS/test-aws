@@ -3,7 +3,7 @@ spring:
     oauth2:
       client:
         registration:
-          cognit:
+          cognito:
             clientId: ${COGNITO_CLIENT_ID}
             clientSecret: ${COGNITO_CLIENT_SECRET}
             scope: openid, profile, email
