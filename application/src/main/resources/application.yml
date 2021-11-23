@@ -14,3 +14,6 @@ cloud:
       static: us-west-1
     stack:
       auto: false
+
+custom:
+  invitation-codes: DUKE, HELLO_WORLD, STRATOSPHERIC # TODO: outsource them -> e.g. env variable or database
